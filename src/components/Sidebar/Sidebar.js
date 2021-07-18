@@ -38,7 +38,7 @@ function Sidebar({ color, image, routes }) {
       <div className="sidebar-wrapper">
         <div className="logo d-flex align-items-center justify-content-start">
           <a className="simple-text" href="/">
-            Nonus
+            Novus
           </a>
         </div>
         <Nav>

@@ -804,3 +804,36 @@
     display: block;
     width: 100%;
 }
+
+
+.card .card-title{
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 1.3rem;
+    font-family: 'Raleway', sans-serif;
+}
+
+.card .card-title small{
+  font-size: 0.9rem;
+  text-transform: capitalize;
+  padding: .25rem;
+}
+
+.mx-auto{
+  margin-left: auto!important;
+  margin-right: auto!important;
+}
+
+.btn-icon{
+  cursor: pointer;
+  font-size: 1.5rem;
+  opacity: 0.8;
+}
+.btn-icon:hover{
+   color: #00bbff;
+   opacity: 1;
+}
+
+.table-full-width.card-body{
+  overflow: auto!important;
+}

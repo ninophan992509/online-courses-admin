@@ -15,14 +15,24 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React, { Component } from "react";
-import { useLocation } from "react-router-dom";
+import React, { Component, useState, useEffect } from "react";
+import { useLocation, history, useHistory } from "react-router-dom";
 import { Navbar, Container, Nav, Dropdown, Button } from "react-bootstrap";
 
 import routes from "routes.js";
 
 function Header() {
   const location = useLocation();
+  const history = useHistory();
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    const userInfo = localStorage.getItem('userInfo');
+    if (userInfo)
+    {
+      setUser(JSON.parse(userInfo));
+    }
+  }, [location]);
+  
   const mobileSidebarToggle = (e) => {
     e.preventDefault();
     document.documentElement.classList.toggle("nav-open");
@@ -75,16 +85,19 @@ function Header() {
                 href="#pablo"
                 onClick={(e) => e.preventDefault()}
               >
-                <span className="no-icon">Account</span>
+                <span className="no-icon">{user ? user.fullname: 'Admin' }</span>
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link
                 className="m-0"
                 href="#pablo"
-                onClick={(e) => e.preventDefault()}
+                onClick={(e) => { e.preventDefault(); localStorage.clear(); history.push('/login'); }}
               >
-                <span className="no-icon">Log out</span>
+                <span className="no-icon" onClick={() => {
+                  localStorage.clear();
+                  history.push('/login');
+                }}>Log out</span>
               </Nav.Link>
             </Nav.Item>
           </Nav>

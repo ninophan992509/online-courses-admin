@@ -26,13 +26,47 @@ import "./assets/scss/light-bootstrap-dashboard-react.scss?v=2.0.0";
 import "./assets/css/demo.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
-import AdminLayout from "layouts/Admin.js";
+import Admin from "layouts/Admin.js";
+import Login from "layouts/Login.js";
+import routes from "./routes";
+
+const PrivateRoute = ({component:Component,  ...rest}) => {
+  let user = localStorage.getItem('userInfo');
+  if (user)
+    user = JSON.parse(user);
+
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        user && user.type === 'admin' ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to="/login" />
+        )
+      }
+    />
+  );
+}
 
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
-      <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-      <Redirect from="/" to="/admin/dashboard" />
+     
+      <Route path="/login" component={Login} />
+      <PrivateRoute path="/admin" component={Admin} />
+      {routes &&
+        routes.map((route, index) => {
+          return (
+            <PrivateRoute
+              key={index}
+              path={`/admin/${route.path}`}
+              exact
+              component={route.component}
+            />
+          );
+        })}
+      {/* <Route exact path="/" render={()=> <Redirect to="/admin/dashboard"/>} /> */}
     </Switch>
   </BrowserRouter>,
   document.getElementById("root")
