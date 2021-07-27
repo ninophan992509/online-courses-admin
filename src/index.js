@@ -30,16 +30,15 @@ import Admin from "layouts/Admin.js";
 import Login from "layouts/Login.js";
 import routes from "./routes";
 
-const PrivateRoute = ({component:Component,  ...rest}) => {
-  let user = localStorage.getItem('userInfo');
-  if (user)
-    user = JSON.parse(user);
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  let user = localStorage.getItem("userInfo");
+  if (user) user = JSON.parse(user);
 
   return (
     <Route
       {...rest}
       render={(props) =>
-        user && user.type === 'admin' ? (
+        user && user.type === "admin" ? (
           <Component {...props} />
         ) : (
           <Redirect to="/login" />
@@ -47,12 +46,11 @@ const PrivateRoute = ({component:Component,  ...rest}) => {
       }
     />
   );
-}
+};
 
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
-     
       <Route path="/login" component={Login} />
       <PrivateRoute path="/admin" component={Admin} />
       {routes &&
@@ -66,7 +64,7 @@ ReactDOM.render(
             />
           );
         })}
-      {/* <Route exact path="/" render={()=> <Redirect to="/admin/dashboard"/>} /> */}
+      <Route exact path="/" render={() => <Redirect to="/admin" />} />
     </Switch>
   </BrowserRouter>,
   document.getElementById("root")
